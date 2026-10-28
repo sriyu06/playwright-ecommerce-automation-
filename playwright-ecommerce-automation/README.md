@@ -97,23 +97,3 @@ Defaults live in `src/test/resources/config.properties`; any key can be overridd
   Or upload the zip to https://trace.playwright.dev
 - **Playwright Inspector:** run with `PWDEBUG=1` (e.g. `PWDEBUG=1 mvn test -Dtest=LoginTests -Dheadless=false`).
 
-## GitHub Actions
-Workflow: `.github/workflows/playwright.yml`
-- Triggers: push to `main`, pull requests to `main`, and manual run (Actions tab -> *Run workflow*).
-- Runs the suite in parallel jobs for Chromium, Firefox and WebKit.
-- Installs the browser and OS dependencies, runs `mvn test`, and fails the job if any test fails.
-- Uploads surefire reports, the HTML report and failure screenshots/traces as artifacts (`test-results-<browser>`).
-
-To inspect a failed run: Actions tab -> the failed run -> the failed job log -> download the `test-results-<browser>` artifact -> open the trace as described above.
-
-## Known limitations
-- Targets a public demo site; its behaviour or markup can change.
-- Each test logs in through the UI (simple and isolated, but slower than reusing saved login state).
-- Tests run sequentially; parallel execution is not configured.
-- Only the standard and locked-out users are covered (not `problem_user`, `performance_glitch_user`, etc.).
-
-## Future improvements
-- Reuse login state with Playwright `storageState`.
-- Parallel test execution.
-- Cover the remaining demo users and logout / burger-menu behaviour.
-- Richer reporting (e.g. Allure).
